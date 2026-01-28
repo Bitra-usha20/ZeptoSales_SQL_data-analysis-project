@@ -9,22 +9,21 @@ use zeptosales;
  -- checking null values are present or not in dataset
  select * from zepto_v2
  where name IS NULL
- OR
-  category IS NULL
-  OR
-   mrp IS NULL
    OR
+   category IS NULL
+   OR
+    mrp IS NULL
+    OR
     discountpercent IS NULL
     OR
-     availablequantity IS NULL
+    availablequantity IS NULL
      OR 
-      discountedsellingprice IS NULL
-      or
-       weightingms IS NULL
-       OR
-       outofstock IS NULL
-       OR 
-       quantity IS NULL;
+    discountedsellingprice IS NULL OR
+    weightingms IS NULL
+    OR
+    outofstock IS NULL
+    OR 
+    quantity IS NULL;
 	-- different category of products 
     select distinct category from zepto_v2
     order by category;
@@ -32,6 +31,7 @@ use zeptosales;
     select outofstock,count(*) from zepto_v2
     group by outofstock;
     -- product name which are present multiple times
+
     select name ,count(*) as multipletimes from zepto_v2
     group by name
     having count(*)>1
@@ -39,6 +39,7 @@ use zeptosales;
     
     -- data Cleaning 
     -- checking products cost might be zero
+
     select * from zepto_v2
     where mrp= 0 or discountedsellingprice=0;
     
@@ -57,6 +58,7 @@ use zeptosales;
     
     -- Bussiness Insight questions
     -- 1.find the top 10 best value products based on discount percentage
+
     select name,mrp,discountpercent from zepto_v2
     order by discountpercent desc
     limit 10;
@@ -66,6 +68,7 @@ use zeptosales;
     order by mrp desc
     limit 10;
     -- Estimated potential revenue for each product category
+
     select category ,sum(discountedsellingprice*availablequantity) AS total_revenue
     from zepto_v2
     group by category
